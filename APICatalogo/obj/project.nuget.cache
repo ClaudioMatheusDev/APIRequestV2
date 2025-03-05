@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1rq3hmeBmIs=",
+  "dgSpecHash": "FikHeomVTDs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\claud\\OneDrive\\Desktop\\PROJETOS\\PROJETOS\\APIRequest\\APIRequestV2\\APICatalogo\\APICatalogo.csproj",
+  "projectFilePath": "C:\\Users\\claud\\OneDrive\\Desktop\\PROJETOS\\PROJETOS\\APIREQUEST\\APIRequestV2\\APICatalogo\\APICatalogo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\claud\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\claud\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.1\\microsoft.aspnetcore.openapi.8.0.1.nupkg.sha512",
