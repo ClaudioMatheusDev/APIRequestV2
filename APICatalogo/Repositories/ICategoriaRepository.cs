@@ -2,7 +2,7 @@
 
 namespace APICatalogo.Repositories;
 
-public interface ICategoriaRepository
+public interface ICategoriaRepository : IRepository<Categoria> //interface que herda da interface IRepository
 {
     IEnumerable<Categoria> GetCategorias();
     Categoria GetCategoria(int id);

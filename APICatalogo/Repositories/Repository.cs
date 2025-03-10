@@ -41,7 +41,7 @@ namespace APICatalogo.Repositories //namespace Repositories que contém a classe
         {
             _context.Set<T>().Remove(entity); //remove um objeto do tipo T no banco de dados
             _context.SaveChanges(); //salva as alterações no banco de dados
-            return entity; //retorna o objeto deletado
+            return entity; //retorna o objeto deletado 
         }
     }
 

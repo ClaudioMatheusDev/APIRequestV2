@@ -3,13 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace APICatalogo.Repositories
 {
-    public interface IProdutoRepository
-    {
-        IQueryable<Produto> GetProdutos();
-        Produto GetProduto(int id);
-        Produto Create(Produto produto);
-        bool Update(Produto produto);
-        bool Delete(int id);
+    public interface IProdutoRepository : IRepository<Produto> //interface que herda da interface IRepository 
+     {
+        IEnumerable<Produto> GetProdutosPorCategoria(int id); //método que retorna uma lista de produtos ordenados por Categoria
 
     }
 }

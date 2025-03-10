@@ -29,8 +29,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<ApiLoggingFilter>();
 
-builder.Services.AddScoped<ICategoriaRepository,CategoriaRepository>();
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<ICategoriaRepository,CategoriaRepository>();//adiciona o serviço de CategoriaRepository
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();//adiciona o serviço de ProdutoRepository
+builder.Services.AddScoped(typeof(Repository<>),typeof(IRepository<>)); //adiciona o serviço de Repository
 
 builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
 {
