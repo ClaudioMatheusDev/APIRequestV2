@@ -10,12 +10,12 @@ namespace APICatalogo.Repositories
 
        public ProdutoRepository(AppDbContext context) : base(context) //construtor que recebe o contexto da Repository
         {
-            _context = context;
+            
         }
 
         public IEnumerable<Produto> GetProdutosPorCategoria(int id)
         {
-           
+            return GetAll().Where(c => c.CategoriaId == id);
         }
 
 
