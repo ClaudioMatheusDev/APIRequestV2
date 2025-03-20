@@ -4,8 +4,8 @@ namespace APICatalogo.Repositories
 {
     public class UnitOfWork : IUnityOfWork //classe UnitOfWork que implementa a interface IUnityOfWork
     {
-        private IProdutoRepository _produtoRepo; //propriedade do tipo IProdutoRepository
-        private ICategoriaRepository _categoriaRepo;//propriedade do tipo ICategoriaRepository
+        private IProdutoRepository? _produtoRepo; //propriedade do tipo IProdutoRepository
+        private ICategoriaRepository? _categoriaRepo;//propriedade do tipo ICategoriaRepository
 
         public AppDbContext _context; // propriedade do tipo AppDbContext tem que ser publica para ser acessada por outras classes
 
@@ -35,7 +35,12 @@ namespace APICatalogo.Repositories
 
         public void Commit()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges(); //salva as alterações no banco de dados
+        }
+
+        public void Dispose() //método Dispose que libera recursos não utilizados
+        {
+            _context.Dispose(); //libera o contexto
         }
     }
 }
