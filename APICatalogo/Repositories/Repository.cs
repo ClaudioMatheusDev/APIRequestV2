@@ -16,7 +16,7 @@ namespace APICatalogo.Repositories //namespace Repositories que contém a classe
 
         public IEnumerable<T> GetAll()//retorna uma lista de objetos do tipo T
         {
-            return _context.Set<T>().AsNoTracking().ToList(); //retorna uma lista de objetos do tipo T do banco de dados
+            return _context.Set<T>().AsNoTracking().ToList(); // retorna uma lista de objetos do tipo T sem rastreamento7
         }
 
         public T? Get(Expression<Func<T, bool>> predicate) // predicate é uma função que recebe um objeto do tipo T e retorna um booleano
