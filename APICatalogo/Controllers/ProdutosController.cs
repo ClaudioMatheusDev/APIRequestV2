@@ -10,18 +10,17 @@ namespace APICatalogo.Controllers;
 [ApiController]
 public class ProdutosController : ControllerBase
 {
-    private readonly IProdutoRepository _produtoRepository;//injeção de dependência com a interface IProdutoRepository
-    private readonly IRepository<Produto> _repository; //injeção de dependência com a interface IRepository
-    public ProdutosController(IRepository<Produto> repository, IProdutoRepository produtoRepository)
+    private readonly IUnityOfWork _uof;//propriedade do tipo IUnityOfWork
+
+    public ProdutosController(IUnityOfWork uof)//construtor que recebe um objeto do tipo IUnityOfWork
     {
-        _produtoRepository = produtoRepository;
-        _repository = repository;
+        _uof = uof;
     }
 
     [HttpGet("produtos/{id}")]
     public ActionResult<IEnumerable<Produto>> GetProdutosPorCategoria(int id) //método que retorna uma lista de produtos ordenados por Categoria 
     {
-        var produtos = _produtoRepository.GetProdutosPorCategoria(id); // retorna uma lista de produtos ordenados por Categoria
+        var produtos = _uof.ProdutoRepository.GetProdutosPorCategoria(id); // retorna uma lista de produtos ordenados por Categoria
         if (produtos is null)
         {
             return NotFound();
@@ -34,7 +33,7 @@ public class ProdutosController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<Produto>> Get()
     {
-        var produtos = _repository.GetAll();
+        var produtos = _uof.ProdutoRepository.GetAll(); //retorna uma lista de produtos
         if (produtos is null)
         {
             return NotFound();
@@ -45,7 +44,7 @@ public class ProdutosController : ControllerBase
     [HttpGet("{id}", Name = "ObterProduto")]
     public ActionResult<Produto> Get(int id)
     {
-        var produto = _repository.Get(c => c.ProdutoId == id);
+        var produto = _uof.ProdutoRepository.Get(c => c.ProdutoId == id);
         if (produto is null)
         {
             return NotFound("Produto não encontrado...");
@@ -59,10 +58,11 @@ public class ProdutosController : ControllerBase
         if (produto is null)
             return BadRequest();
 
-        var novoProduto = _repository.Create(produto);
+        var novoProduto = _uof.ProdutoRepository.Create(produto);//cria o produto
+        _uof.Commit(); //salva as alterações no banco de dados
 
         return new CreatedAtRouteResult("ObterProduto",
-            new { id = novoProduto.ProdutoId }, novoProduto);
+            new { id = novoProduto.ProdutoId }, novoProduto);//retorna o objeto criado
     }
 
     [HttpPut("{id:int}")]
@@ -73,7 +73,8 @@ public class ProdutosController : ControllerBase
             return BadRequest();//erro 400
         }
 
-        var produtoAtualizado = _repository.Update(produto);
+        var produtoAtualizado = _uof.ProdutoRepository.Update(produto);//atualiza o produto
+        _uof.Commit();//salva as alterações no banco de dados
 
         return Ok(produtoAtualizado);
 
@@ -82,14 +83,15 @@ public class ProdutosController : ControllerBase
     [HttpDelete("{id:int}")]
     public ActionResult Delete(int id)
     {
-        var produto = _repository.Get(p => p.ProdutoId == id);
+        var produto = _uof.ProdutoRepository.Get(p => p.ProdutoId == id); //retorna o produto com o id passado como parâmetro
 
         if (produto is null)
         {
             return NotFound();
         }
 
-        var produtoDeletado = _repository.Delete(produto);
+        var produtoDeletado = _uof.ProdutoRepository.Delete(produto); //deleta o produto
+        _uof.Commit();//salva as alterações no banco de dados
 
         return Ok(produtoDeletado);
 
